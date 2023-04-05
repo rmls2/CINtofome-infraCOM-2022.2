@@ -82,7 +82,7 @@ def recebe_arquivo(socket_udp, arquivo):
             data_rrecvd, serv_Addr = socket_udp.recvfrom(1024)
     except TimeoutError:
         print('arquivo enviado pelo servidor e recebido pelo cliente com sucesso')
-
+    # fecha o arquivo
     file_reccvd.close()
 
 # função que vai enviar mensagem pro servidor

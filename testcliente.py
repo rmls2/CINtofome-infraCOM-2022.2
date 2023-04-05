@@ -18,9 +18,8 @@ if inicia_cliente():
         envia_mensagem(udp_client, data_msg, dest)
         # verifica se a mensagem é quit servidor, para poder sair do loop
         if data_msg == 'quit servidor':
-            print('cliente finalizado')
+            print('comunicação finalizada')
             break
-
         print('retransmissão do servidor:', dest, recebe_mensagem(udp_client))
         # entrada do usuário para enviar novas mensagens
         data_msg = input('digite sua mensagem aqui: ')
