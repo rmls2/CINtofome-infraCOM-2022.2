@@ -78,7 +78,6 @@ _cliente.py_
 ```bash
 arquivo recebido com sucesso
 ```
-https://github.com/BrunoCS8
 
 ## Desenvolvedores
 
