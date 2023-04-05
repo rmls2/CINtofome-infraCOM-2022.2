@@ -25,23 +25,59 @@ Usando o módulo socket.py implementamos a comunicação entre  scripts diferent
 
 Após fazer o clone do repositório na sua máquina, abra-o usando o VScode. Exiba um terminal e faça um split da janela, ou abra dois terminais, para visualizar o que está acontecendo no script do cliente e no do servidor. Execute o script _servidor.py_, conforme mostrado abaixo: 
 
-![img1](https://user-images.githubusercontent.com/93690581/229764005-c80ddb70-c192-42b1-87a4-3966f542acfa.png)
+```bash
+python3 servidor.py
+```
+Assim que o script do servidor for executado, o trminal exibirá uma pergunta sobre o tipo de pacote que o cliente quer enviar ao o servidor. Se for uma comunicação por mensagem a opção digitada tem que ser _mensagem_, se for transferência de arquivo o input precisa ser _arquivo_
 
-O script do servidor decidirá o tipo de pacote que ele irá receber, ou seja, se será apenas uma troca de mensagem ou envio de arquivo. Apesar de ser uma situação irreal, essa primeira implementação foi pensanda apenas para cumprir os requisitos da primeira parte do projeto (so... Easy, tiger!). 
+```bash
+Que tipo de pacote você deseja receber, mensagem ou arquivo?
+Digite sua opção: 
+```
+Agora, execute o script _cliente.py_ para enviar os pacotes ao servidor. 
 
-Agora, execute o script _cliente.py_ e decida o pacote que o cliente irá mandar. Nesse caso, como nossa escolha é pré-definida, temos que mandar um pacote de acordo com o que foi definido no servidor. Para isso, precisamos mandar alguns inputs para o terminal conforme mostrado abaixo: 
+```bash
+python3 cliente.py
+```
+assim que o script do cliente for executado, o terminal vai exibir a seguinte mensagem
 
-![img2](https://user-images.githubusercontent.com/93690581/229767118-04f52099-a6b9-4339-9f83-42df65388092.png)
+```bash
+Deseja mandar uma mensagem? (y/n):  
+```
 
-como podemos ver, ao executar _cliente.py_ a linha de comando nos dá algumas opções. Se quisermos enviar um pacote de mensagem - como se fosse um chat -  para o servidor digitamos 'y' para o primeiro input, caso contrário digitamos 'n' na CLI. A próxima linha exibirá uma pergunta sobre o envio de arquivo. Como queremos enviar um arquivo, então digitamos 'y' e passamos o caminho do arquivo que queremos enviar no próximo input. Após isso, precisamos definir um nome para o arquivo (*) que guardará os pacotes retransmitidos pelo servidor (ou seja, vamos definir um espaço para os dados que será retransmitido de volta ao cliente). Feita toda essa preparação, o cliente vai enviar o arquivo ao servidor.
+a resposta _y_ ou _n_ (sim ou não) vai depender do que o cliente quer enviar para o servidor. Se ao rodar o script do servidor, decidimos por envio de arquivo, o input a ser colocado precisa ser _n_ ou seja, *não*. 
 
-![img3](https://user-images.githubusercontent.com/93690581/229774795-a2a31534-783e-4e8d-9c72-b4ded61f49b9.jpg)
+```bash
+deseja mandar uma mensagem para o servidor? (y/n): n
+```
+Dessa forma, o terminal exibirá a seguinte mensagem:
 
+```bash
+então você deseja enviar um arquivo para o servidor? (y/n):
+```
 
-Dessa forma, o servidor vai receber os dados que foram enviados pelo cliente e vai armazená-los em um novo arquivo. Logo após isso, o servidor vai retransmitir o arquivo que ele recebeu de volta ao cliente que vai salvá-los no arquivo (*).  
+Nessa parte, devemos dar o input _y_ e o terminal irá exibir a seguinte mensagem
 
-![img4](https://user-images.githubusercontent.com/93690581/229774840-ae0d3904-5374-47e3-a000-8089a5d3ab19.jpg)
+```bash
+passe o caminho do arquivo:
+```
+Na pasta *arqvs* há alguns arquivos para teste utilizando as extensões requeridas para a primeira parte do projeto. Nesse caso, para enviar um arquivo dessa pasta basta digitarmos ` ./arqvs/nome-do-arquivo ` . 
+para exemplificar, vamos utilizar o arquivo _linkedin2.kpg_ e vamos enviá-lo para o servidor.
 
+```bash
+passe o caminho do arquivo aqui:./arqvs/linkedin2.jpg
+```
+após isso, o script do cliente vai enviar o arquivo _linkedin2.kpg_ para o servidor. O servidor por sua vez vai armazenar os pacotes na variável _arquivo_ que foi o nosso input inicial quando inicializamos o servidor. Após isso, o servidor vai retransmitir esses dados de volta ao cliente.
+Quando todas essas etapas forem finalizadas os scripts irão exibir as seguintes mensagens
+
+_servidor.py_
+```bash
+arquivo retransmitido ao cliente com sucesso!
+```
+_cliente.py_
+```bash
+arquivo recebido com sucesso
+```
 
 
 ## Desenvolvedores
