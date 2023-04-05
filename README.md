@@ -19,7 +19,7 @@ Projeto realizado na disciplina de Infraestrutura de Comunicação do período d
 
 ## Como funciona 
 
-Usando o módulo socket.py implementamos a comunicação entre  scripts diferentes que representam um cliente e  um servidor. Os scripts se comunicam entre si, como também enviam arquivos de áudio, imagem, vídeo, etc. O script do cliente é capaz de mandar esses dados e o script do servidor é capaz de armazená-los e retransmití-los de volta ao cliente, como acontece no modelo cliente-servidor entre aplicações as aplicações de rede.  
+Usando o módulo socket.py implementamos a comunicação entre  scripts diferentes que representam um cliente e  um servidor. Os scripts se comunicam entre si, como também enviam arquivos de áudio, imagem, vídeo, etc. O script do cliente é capaz de mandar esses dados e o script do servidor é capaz de armazená-los e retransmití-los de volta ao cliente, como acontece no modelo cliente-servidor entre aplicações aplicaçde rede.  
 
 ## Instruções para rodar o projeto 
 
@@ -67,7 +67,7 @@ para exemplificar, vamos utilizar o arquivo _linkedin2.kpg_ e vamos enviá-lo pa
 ```bash
 passe o caminho do arquivo aqui:./arqvs/linkedin2.jpg
 ```
-após isso, o script do cliente vai enviar o arquivo _linkedin2.kpg_ para o servidor. O servidor por sua vez vai armazenar os pacotes na variável _arquivo_ que foi o nosso input inicial quando inicializamos o servidor. Após isso, o servidor vai retransmitir esses dados de volta ao cliente.
+após isso, o script do cliente vai enviar o arquivo _linkedin2.kpg_ para o servidor. O servidor por sua vez vai armazenar os bytes dos pacotes na variável _arquivo_ que foi o nosso input inicial quando inicializamos o servidor. Após isso, o servidor vai retransmitir esses dados de volta ao cliente.
 Quando todas essas etapas forem finalizadas os scripts irão exibir as seguintes mensagens
 
 _servidor.py_
