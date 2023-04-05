@@ -81,8 +81,8 @@ arquivo recebido com sucesso
 
 ## Desenvolvedores
 
-|  [<img src="https://avatars.githubusercontent.com/u/93690581?v=4" width=115><br><sub>Robbert Miller</sub>](https://github.com/rmls2) | [<img src="https://avatars.githubusercontent.com/u/47424471?v=4" width=115><br><sub>Filipe Fernando</sub>](https://github.com/lipe-1512) | [<img src="https://avatars.githubusercontent.com/u/94053358?v=4" width=115><br><sub>Bruno Carvalho</sub>](https://github.com/BrunoCS8) | [<img src="https://avatars.githubusercontent.com/u/86261975?v=4" width=115><br><sub>Gabriel Vasconcelos</sub>](https://github.com/GabrielVasconcel) | 
+| [<img src="https://avatars.githubusercontent.com/u/93690581?v=4" width=115><br><sub>Robbert Miller</sub>](https://github.com/rmls2) |  [<img src="https://avatars.githubusercontent.com/u/47424471?v=4" width=115><br><sub>Filipe Fernando</sub>](https://github.com/lipe-1512) |[<img src="https://avatars.githubusercontent.com/u/86261975?v=4" width=115><br><sub>Gabriel Vasconcelo</sub>](https://github.com/GabrielVasconcel)|[<img src="https://avatars.githubusercontent.com/u/87576126?v=4" width=115><br><sub>Isaac Dias</sub>](https://github.com/diasisaac)|[<img src="https://avatars.githubusercontent.com/u/94053358?v=4" width=115><br><sub>Bruno Carvalho</sub>](https://github.com/BrunoCS8)|
+| :---: | :---: | :---: | :---: | :---: | 
 
-| :---: | :---: | :---: | :---: | 
 
 
