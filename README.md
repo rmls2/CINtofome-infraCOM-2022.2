@@ -19,11 +19,11 @@ Projeto realizado na disciplina de Infraestrutura de Comunicação do período d
 
 ## Como funciona 
 
-Usando o módulo socket.py implementamos a comunicação entre  scripts diferentes que representam um cliente e  um servidor. Os scripts se comunicam entre si, como também enviam arquivos de áudio, imagem, vídeo, etc. O script do cliente é capaz de mandar esses dados e o script do servidor é capaz de armazená-los e retransmití-los de volta ao cliente, como acontece no modelo cliente-servidor entre aplicações de rede distintas.  
+Usando o módulo socket.py implementamos a comunicação entre  scripts diferentes que representam um cliente e  um servidor. Os scripts se comunicam entre si, como também enviam arquivos de áudio, imagem, vídeo, etc. O script do cliente é capaz de mandar esses dados e o script do servidor é capaz de armazená-los e retransmití-los de volta ao cliente, como acontece no modelo cliente-servidor entre aplicações as aplicações de rede.  
 
 ## Instruções para rodar o projeto 
 
-Após fazer o clone do repositório na sua máquina, abra-o usando o VScode. Exiba um terminal e faça um split da janela, ou abra dois terminais, para visualizar o que está acontecendo no script do cliente e do servidor. Execute o script _servidor.py_, conforme mostrado abaixo: 
+Após fazer o clone do repositório na sua máquina, abra-o usando o VScode. Exiba um terminal e faça um split da janela, ou abra dois terminais, para visualizar o que está acontecendo no script do cliente e no do servidor. Execute o script _servidor.py_, conforme mostrado abaixo: 
 
 ![img1](https://user-images.githubusercontent.com/93690581/229764005-c80ddb70-c192-42b1-87a4-3966f542acfa.png)
 
