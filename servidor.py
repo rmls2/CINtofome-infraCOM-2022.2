@@ -38,6 +38,7 @@ else:
     udp_serv.sendto(extensao.encode(), ('localhost', 3000))
     # retransmite o arquivo enviado pelo cliente.
     envia_arquivo(udp_serv, arqv, dest)
+    print('arquivo retransmitido ao cliente com sucesso!')
 
 # finaliza o socket
 udp_serv.close()
