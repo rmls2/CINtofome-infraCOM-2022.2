@@ -31,7 +31,7 @@ python3 servidor.py
 Assim que o script do servidor for executado, o trminal exibirá uma pergunta sobre o tipo de pacote que o cliente quer enviar ao o servidor. Se for uma comunicação por mensagem a opção digitada tem que ser _mensagem_, se for transferência de arquivo o input precisa ser _arquivo_
 
 ```bash
-Que tipo de pacote você deseja receber, mensagem ou arquivo?
+Que tipo de pacote o cliente deseja mandar, mensagem ou arquivo?
 Digite sua opção: 
 ```
 Agora, execute o script _cliente.py_ para enviar os pacotes ao servidor. 
