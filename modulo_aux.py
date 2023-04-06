@@ -30,8 +30,8 @@ def inicia_cliente():
 def inicia_servidor():
 
     while True:
-        print('Que tipo de pacote você deseja receber, mensagem ou arquivo?')
-        opcao_de_pacote = input('Digite sua opção: ')
+        print('Que tipo de pacote o cliente deseja mandar, mensagem ou arquivo?')
+        opcao_de_pacote = input('Digite mensagem ou arquivo: ')
 
         if opcao_de_pacote == 'mensagem':
             return opcao_de_pacote
