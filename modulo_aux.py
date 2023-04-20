@@ -1,8 +1,6 @@
 # modulo criado para gerar uma interface amigavel no terminal para decidir se o cliente vai enviar mensage pura ou arquivo
 
 import time
-data_msg = ''
-arquivo = None
 
 
 def inicia_cliente():
@@ -17,8 +15,6 @@ def inicia_cliente():
             entrada = input(
                 'então você deseja enviar um arquivo para o servidor? (y/n): ')
             if entrada == 'y' or entrada == 'Y':
-                global arquivo
-                arquivo = 'ok'
                 return False
             else:
                 print('resposta incorreta, vamos tentar novamente!\n')
@@ -34,10 +30,10 @@ def inicia_servidor():
         opcao_de_pacote = input('Digite mensagem ou arquivo: ')
 
         if opcao_de_pacote == 'mensagem':
-            return opcao_de_pacote
+            return True
 
         elif opcao_de_pacote == 'arquivo':
-            return opcao_de_pacote
+            return False
         else:
             print('opção invalida, vamos tentar novamente!')
 
