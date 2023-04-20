@@ -14,7 +14,7 @@ udp_serv.bind(orig)
 
 # recebendo mensagem do cliente
 
-if inicia_servidor() == 'mensagem':
+if inicia_servidor():
     # esse loop vai iterar enquanto o cliente enviar os pacotes
     while True:
        # armazena os bytes enviados ao servidor
