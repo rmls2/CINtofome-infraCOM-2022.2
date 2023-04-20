@@ -1,5 +1,5 @@
 import socket
-from modulo_aux import data_msg, arquivo, inicia_cliente, envia_arquivo, recebe_arquivo, envia_mensagem, recebe_mensagem
+from modulo_aux import inicia_cliente, envia_arquivo, recebe_arquivo, envia_mensagem, recebe_mensagem
 
 HOST = 'localhost'  # ip do servidor
 PORT = 5000  # porta onde o servidor vai receber os pacotes
