@@ -1,1 +1,15 @@
-obladi oblada life goes on
+Existem vários tipos de requisições HTTP, mas os principais são:
+
+    GET - É a requisição mais comum e simples em HTTP. Ela é usada para obter um recurso ou informações específicas do servidor. As requisições GET não alteram nenhum dado no servidor e não possuem corpo de mensagem na solicitação.
+
+    POST - É usada para enviar dados para o servidor, como envio de formulários ou envio de arquivos. As requisições POST podem alterar dados no servidor e possuem corpo de mensagem na solicitação.
+
+    PUT - É usada para atualizar um recurso existente no servidor ou criar um novo recurso, caso ele não exista. As requisições PUT podem alterar dados no servidor e possuem corpo de mensagem na solicitação.
+
+    DELETE - É usada para excluir um recurso específico do servidor. As requisições DELETE podem alterar dados no servidor e não possuem corpo de mensagem na solicitação.
+
+    PATCH - É usada para atualizar parcialmente um recurso existente no servidor. As requisições PATCH podem alterar dados no servidor e possuem corpo de mensagem na solicitação.
+
+Além desses, existem outros tipos de requisições HTTP menos comuns, como HEAD, OPTIONS, CONNECT e TRACE. Essas requisições são menos utilizadas e têm funções específicas em situações muito particulares.
+
+Cada um desses tipos de requisições HTTP tem uma função específica e é importante entender a diferença entre eles para construir aplicativos web robustos e seguros.

@@ -1,5 +1,5 @@
 import time
-
+from datetime import datetime
 
 class Cliente ():
     def __init__(self) -> None:
@@ -19,9 +19,18 @@ class Cliente ():
             # Monta a mensagem com número de sequênciextensao_arquivo = input('digite a extensão do arquivo enviado: ')a, checksum e dados do pacote
             mensagem = f'{num_seq_binario}|-x-|-x-|-x-|{self.checksum(dados_em_bits)}|-x-|-x-|-x-|'.encode(
             )+dados
+            
+            start_timer = datetime.now()
             # envia para o o socket (ip, porta)
             socket.sendto(mensagem, ip_porta)
-            print(f'enviando pacote {num_sequencia}...')
+            print(f'\nenviando pacote {num_sequencia}...')
+            
+            self.recebe_ack(socket)
+
+            end_timer = datetime.now()
+            time_taken = (end_timer - start_timer).total_seconds()
+            print('tempo de envio de pacote e recebimento de ack: {:.8f} segundos'.format(time_taken))
+
             num_sequencia += 1
             time.sleep(0.0001)
         print('transmissão finalizada!')
@@ -47,13 +56,14 @@ class Cliente ():
 
                 if checksumm == self.checksum(dados_em_bits):
                     print(
-                        f'pacote {int(num_sequencia[2:], 2)} chegou corretamente...')
+                        f'pacote {int(num_sequencia[2:], 2)} recebido.')
                     arquivo_servidor.write(dados)
                 else:
                     print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
-                # gera uma execeção após um tempo de 2 caso o o receptor em questão não receba mais pacotes
+                # gera uma execeção após um tempo de 2 segundos caso o receptor em questão não receba mais pacotes
                 socket.settimeout(2)
                 mensagem, addr = socket.recvfrom(2048)
+
         except TimeoutError:
             print('transmissão finalizada!')
 
@@ -70,10 +80,15 @@ class Cliente ():
         if mensagem:
             ack = f'ACK {int(num_seq[2:], 2)}'
             socket.sendto(ack.encode(), addr)
+            print(f'- enviando ACK {int(num_seq[2:], 2)}...\n')
 
-    def recebe_ack(self, socket, num_seq):
-        if socket.recvfrom(512):
-            print(f'ACK {num_seq} recebido')
+    def recebe_ack(self, socket):
+        global addr
+        mensagem, addr = socket.recvfrom(512)
+        mensagem = mensagem.decode()
+
+        if mensagem:
+            print(f'- {mensagem} recebido\n')
 
 
 class Servidor():
@@ -117,13 +132,16 @@ class Servidor():
                     '|-x-|-x-|-x-|'.encode())
                 num_sequencia = num_sequencia.decode()
                 checksumm = checksumm.decode()
+        
+                # self.envia_ack(socket, mensagem,num_sequencia,addr)
 
                 dados_em_bits = ''.join([format(byte, '08b')
                                         for byte in dados])
 
                 if checksumm == self.checksum(dados_em_bits):
                     print(
-                        f'pacote {int(num_sequencia[2:], 2)} chegou corretamente...')
+                        f'pacote {int(num_sequencia[2:], 2)} recebido.')
+                    self.envia_ack(socket, mensagem,num_sequencia,addr)
                     arquivo_servidor.write(dados)
                 else:
                     print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
@@ -146,7 +164,12 @@ class Servidor():
         if mensagem:
             ack = f'ACK {int(num_seq[2:], 2)}'
             socket.sendto(ack.encode(), addr)
+            print(f'- enviando ACK {int(num_seq[2:], 2)}...\n')
 
-    def recebe_ack(self, socket, num_seq):
-        if socket.recvfrom(512):
-            print(f'ACK {num_seq} recebido')
+    def recebe_ack(self, socket):
+        global addr
+        mensagem, addr = socket.recvfrom(512)
+        mensagem = mensagem.decode()
+
+        if mensagem:
+            print(f'- {mensagem} recebido\n')
