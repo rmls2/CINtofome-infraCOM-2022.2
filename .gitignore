@@ -5,3 +5,6 @@
 # cache do scripts 
 
 __pycache__
+
+# 
+.vscode
