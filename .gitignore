@@ -1,3 +1,7 @@
 # ambiente virtual 
 
 .venv
+
+# cache do scripts 
+
+__pycache__
