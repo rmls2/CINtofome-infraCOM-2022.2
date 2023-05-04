@@ -1,56 +1,24 @@
 import time
-import hashlib
-import sys
-
-HOST = 'localhost'  # Endereco IP do Servidor
-PORT_serv = 5000    # porta que o Servidor vai ouvir para receber os pacotes
-port_clnt = 3010
 
 
-class Servidor():
+class Cliente ():
     def __init__(self) -> None:
-        self.IP_PORTA_servidor = (HOST, PORT_serv)
-        self.inicia = True
-
-    def recebe_pacote(self, socket, caminho_do_arquivo):
-        global addr
-        arquivo_servidor = open(caminho_do_arquivo, 'wb')
-        # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), onde porta é o numero de porta do transmissor
-        # #1024 representa o tamanho do pacote recebido
-        mensagem, addr = socket.recvfrom(1024)
-
-        try:
-            while mensagem:
-                # Separa o número de sequência, o checksum e os dados do pacote
-                num_sequencia, checksum, dados = mensagem.decode().split('|')
-
-                print(addr, dados)
-                # Verifica o checksum
-                if hashlib.md5(dados.encode()).hexdigest() == checksum:
-                    # se o checksum bater ele vai escrever os dados no arquivo do servidor
-                    arquivo_servidor.write(dados.encode())
-                    print(f'pacote {num_sequencia} chegou corretamente...')
-                else:
-                    print(f'pacote {num_sequencia} corrompido...')
-                # gera uma execeção após um tempo de 2 caso o o receptor em questão não receba mais pacotes
-                socket.settimeout(2)
-                mensagem, addr = socket.recvfrom(1024)
-        except TimeoutError:
-            print('transmissão finalizada!')
-
-        arquivo_servidor.close()
+        self.ip_porta = ('localhost', 3001)
 
     def envia_pacote(self, socket, caminho_do_arquivo, ip_porta):
         arquivo = open(caminho_do_arquivo, 'rb')
         num_sequencia = 1
+
         while True:
             dados = arquivo.read(1024)
+            dados_em_bits = ''.join([format(byte, '08b') for byte in dados])
             if not dados:
                 break
             # Calcula o checksum
-            checksum = hashlib.md5(dados).hexdigest()
-            # Monta a mensagem com número de sequência, checksum e dados do pacote
-            mensagem = f'{num_sequencia}|{checksum}|'.encode() + dados
+            num_seq_binario = bin(num_sequencia)
+            # Monta a mensagem com número de sequênciextensao_arquivo = input('digite a extensão do arquivo enviado: ')a, checksum e dados do pacote
+            mensagem = f'{num_seq_binario}|-x-|-x-|-x-|{self.checksum(dados_em_bits)}|-x-|-x-|-x-|'.encode(
+            )+dados
             # envia para o o socket (ip, porta)
             socket.sendto(mensagem, ip_porta)
             print(f'enviando pacote {num_sequencia}...')
@@ -59,53 +27,126 @@ class Servidor():
         print('transmissão finalizada!')
         arquivo.close()
 
-
-class Cliente():
-    def __init__(self) -> None:
-        self.IP_PORTA_cliente = (HOST, port_clnt)
-        self.inicia = True
-
     def recebe_pacote(self, socket, caminho_do_arquivo):
         global addr
         arquivo_servidor = open(caminho_do_arquivo, 'wb')
         # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), onde porta é o numero de porta do transmissor
         # #1024 representa o tamanho do pacote recebido
-        mensagem, addr = socket.recvfrom(1024)
+        mensagem, addr = socket.recvfrom(2048)
 
         try:
-            while True:
-
+            while mensagem:
                 # Separa o número de sequência, o checksum e os dados do pacote
-                num_sequencia, checksum, dados = mensagem.decode().split('|')
-                # Verifica o checksum
-                if hashlib.md5(dados.encode()).hexdigest() == checksum:
-                    # se o checksum bater ele vai escrever os dados no arquivo do servidor
-                    arquivo_servidor.write(dados.encode())
-                    print(f'pacote {num_sequencia} chegou corretamente...')
+                num_sequencia, checksumm, dados = mensagem.split(
+                    '|-x-|-x-|-x-|'.encode())
+                num_sequencia = num_sequencia.decode()
+                checksumm = checksumm.decode()
+
+                dados_em_bits = ''.join([format(byte, '08b')
+                                        for byte in dados])
+
+                if checksumm == self.checksum(dados_em_bits):
+                    print(
+                        f'pacote {int(num_sequencia[2:], 2)} chegou corretamente...')
+                    arquivo_servidor.write(dados)
                 else:
-                    print(f'pacote {num_sequencia} corrompido...')
+                    print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
                 # gera uma execeção após um tempo de 2 caso o o receptor em questão não receba mais pacotes
                 socket.settimeout(2)
-                mensagem, addr = socket.recvfrom(1024)
+                mensagem, addr = socket.recvfrom(2048)
         except TimeoutError:
             print('transmissão finalizada!')
 
         arquivo_servidor.close()
 
+    def checksum(self, dados):
+        groups = [dados[i:i+8] for i in range(0, len(dados), 8)]
+        binaries = [int(group, 2) for group in groups]
+        soma_dados = sum(binaries)
+
+        return bin(soma_dados)[2:]
+
+    def envia_ack(self, socket, mensagem, num_seq, addr):
+        if mensagem:
+            ack = f'ACK {int(num_seq[2:], 2)}'
+            socket.sendto(ack.encode(), addr)
+
+    def recebe_ack(self, socket, num_seq):
+        if socket.recvfrom(512):
+            print(f'ACK {num_seq} recebido')
+
+
+class Servidor():
+    def __init__(self) -> None:
+        self.ip_porta = ('localhost', 5000)
+
     def envia_pacote(self, socket, caminho_do_arquivo, ip_porta):
         arquivo = open(caminho_do_arquivo, 'rb')
         num_sequencia = 1
+
         while True:
             dados = arquivo.read(1024)
+            dados_em_bits = ''.join([format(byte, '08b') for byte in dados])
+
             if not dados:
                 break
             # Calcula o checksum
-            checksum = hashlib.md5(dados).hexdigest()
+            num_seq_binario = bin(num_sequencia)
             # Monta a mensagem com número de sequência, checksum e dados do pacote
-            mensagem = f'{num_sequencia}|{checksum}|'.encode() + dados
+            mensagem = f'{num_seq_binario}|-x-|-x-|-x-|{self.checksum(dados_em_bits)}|-x-|-x-|-x-|'.encode(
+            )+dados
+            # envia para o o socket (ip, porta)
             socket.sendto(mensagem, ip_porta)
             print(f'enviando pacote {num_sequencia}...')
             num_sequencia += 1
             time.sleep(0.0001)
         print('transmissão finalizada!')
         arquivo.close()
+
+    def recebe_pacote(self, socket, caminho_do_arquivo):
+        global addr
+        arquivo_servidor = open(caminho_do_arquivo, 'wb')
+        # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), onde porta é o numero de porta do transmissor
+        # #1024 representa o tamanho do pacote recebido
+        mensagem, addr = socket.recvfrom(2048)
+
+        try:
+            while mensagem:
+                # Separa o número de sequência, o checksum e os dados do pacote
+                num_sequencia, checksumm, dados = mensagem.split(
+                    '|-x-|-x-|-x-|'.encode())
+                num_sequencia = num_sequencia.decode()
+                checksumm = checksumm.decode()
+
+                dados_em_bits = ''.join([format(byte, '08b')
+                                        for byte in dados])
+
+                if checksumm == self.checksum(dados_em_bits):
+                    print(
+                        f'pacote {int(num_sequencia[2:], 2)} chegou corretamente...')
+                    arquivo_servidor.write(dados)
+                else:
+                    print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
+                # gera uma execeção após um tempo de 2 caso o o receptor em questão não receba mais pacotes
+                socket.settimeout(2)
+                mensagem, addr = socket.recvfrom(2048)
+        except TimeoutError:
+            print('transmissão finalizada!')
+
+        arquivo_servidor.close()
+
+    def checksum(self, dados):
+        groups = [dados[i:i+8] for i in range(0, len(dados), 8)]
+        binaries = [int(group, 2) for group in groups]
+        soma_dados = sum(binaries)
+
+        return bin(soma_dados)[2:]
+
+    def envia_ack(self, socket, mensagem, num_seq, addr):
+        if mensagem:
+            ack = f'ACK {int(num_seq[2:], 2)}'
+            socket.sendto(ack.encode(), addr)
+
+    def recebe_ack(self, socket, num_seq):
+        if socket.recvfrom(512):
+            print(f'ACK {num_seq} recebido')
