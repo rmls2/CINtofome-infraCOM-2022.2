@@ -1,3 +1,4 @@
+from datetime import datetime
 import random
 
 
@@ -29,17 +30,16 @@ def recebe_ack(socket, num_seq):
         print(f'ACK {num_seq} recebido')
 
 
-from datetime import datetime
 start = datetime.now()
 # seu código aqui
 end = datetime.now()
 time_taken = end - start
-print('tempo de envio e recebimento de ack: {:.8f} segundos'.format(time_taken.total_seconds()))
-
+print('tempo de envio e recebimento de ack: {:.8f} segundos'.format(
+    time_taken.total_seconds()))
 
 
 # while True:
-#     try: 
+#     try:
 #         if self.recebe_ack(socket):
 #             break
 #     except TimeoutError:
