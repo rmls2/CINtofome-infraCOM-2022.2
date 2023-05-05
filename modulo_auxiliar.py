@@ -1,6 +1,4 @@
 import time
-#from datetime import datetime
-
 
 class Cliente ():
     def __init__(self) -> None:
@@ -17,26 +15,19 @@ class Cliente ():
                 break
             # Monta a mensagem com número de sequênciextensao_arquivo = input('digite a extensão do arquivo enviado: ')a, checksum e dados do pacote
             mensagem = f'{bin(num_sequencia)}|-x-|-x-|-x-|{self.checksum(dados_em_bits)}|-x-|-x-|-x-|'.encode()+dados
-
            # Defina o número máximo de reenvios
             MAX_RESENDS = 3
-
             # Defina o tempo limite para a resposta do servidor (em segundos)
             TIMEOUT = 1
-
             # Enquanto o número de reenvios for menor que o máximo permitido
             for i in range(MAX_RESENDS):
-
                 # Envie o pacote e imprima a mensagem
                 socket.sendto(mensagem, ip_porta)
                 print(f"\nEnviando pacote {num_sequencia}...")
-
                 # Inicie o temporizador
                 start_time = time.time()
-
                 # Enquanto o tempo limite não for atingido
                 while (time.time() - start_time) < TIMEOUT:
-
                     # Aguarde a resposta do servidor
                     try:
                         socket.settimeout(TIMEOUT)
@@ -45,24 +36,21 @@ class Cliente ():
                             break
                     except TimeoutError:
                         print(f"Tempo limite atingido para o pacote {num_sequencia}!")
-
                 # Se o ACK foi recebido, encerre o loop de reenvio e o programa
                 if self.recebe_ack != None:
                     break
-
                 # Se o tempo limite for atingido e o ACK não for recebido, reenvie o pacote
-                print(
-                    f"ACK não recebido para o pacote {num_sequencia}. Tentando novamente...")
+                print(f"ACK não recebido para o pacote {num_sequencia}. Tentando novamente...")
 
             num_sequencia += 1
             time.sleep(0.0001)
+
         print('transmissão finalizada!')
         arquivo.close()
 
     def recebe_pacote(self, socket, caminho_do_arquivo):
         arquivo_servidor = open(caminho_do_arquivo, 'wb')
-        # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), onde porta é o numero de porta do transmissor
-        # #1024 representa o tamanho do pacote recebido
+        # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), 1024 representa o tamanho do pacote recebido
         mensagem, addr = socket.recvfrom(2048)
         socket.settimeout(0.05)
 
@@ -81,7 +69,6 @@ class Cliente ():
                 else:
                     print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
                 # gera uma execeção após um tempo de 2 segundos caso o receptor em questão não receba mais pacotes
-                # socket.settimeout(1)
                 mensagem, addr = socket.recvfrom(2048)
         except TimeoutError:
             print('transmissão finalizada!')
@@ -138,8 +125,7 @@ class Servidor():
 
     def recebe_pacote(self, socket, caminho_do_arquivo):
         arquivo_servidor = open(caminho_do_arquivo, 'wb')
-        # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), onde porta é o numero de porta do transmissor
-        # #1024 representa o tamanho do pacote recebido
+        # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta),1024 representa o tamanho do pacote recebido
         mensagem, addr = socket.recvfrom(2048)
         socket.settimeout(0.05)
 
@@ -150,9 +136,7 @@ class Servidor():
                     '|-x-|-x-|-x-|'.encode())
                 num_sequencia = num_sequencia.decode()
                 checksumm = checksumm.decode()
-
                 # self.envia_ack(socket, mensagem,num_sequencia,addr)
-
                 dados_em_bits = ''.join([format(byte, '08b')for byte in dados])
 
                 if checksumm == self.checksum(dados_em_bits):
