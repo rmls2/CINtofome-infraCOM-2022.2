@@ -14,15 +14,18 @@ extensao_arquivo, addr = socket_servidor.recvfrom(1024)
 
 if extensao_arquivo:
     caminho_completo = './arqvs_servidor/arquivo_servidor' + extensao_arquivo.decode()
+
     Servidor().recebe_pacote(socket_servidor, caminho_completo)
+
     print('\n**retransmitindo pacotes**\n')
-    Servidor().envia_pacote(
-        socket_servidor, caminho_completo, Cliente().ip_porta)
+
+    Servidor().envia_pacote(socket_servidor, caminho_completo, Cliente().ip_porta)
 
 else:
     Servidor().recebe_pacote(socket_servidor, './arqvs_servidor/arquivo_servidor')
+
     print('\n**retransmitindo pacotes**\n')
-    Servidor().envia_pacote(
-        socket_servidor, './arqvs_servidor/arquivo_servidor', Cliente().ip_porta)
+
+    Servidor().envia_pacote(socket_servidor, './arqvs_servidor/arquivo_servidor', Cliente().ip_porta)
 
 socket_servidor.close()
