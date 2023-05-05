@@ -42,10 +42,11 @@ class Cliente ():
         # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), onde porta é o numero de porta do transmissor
         # #1024 representa o tamanho do pacote recebido
         mensagem, addr = socket.recvfrom(2048)
+
         socket.settimeout(0.05)
 
         try:
-            while mensagem:
+            while True:
                 # Separa o número de sequência, o checksum e os dados do pacote
                 num_sequencia, checksumm, dados = mensagem.split(
                     '|-x-|-x-|-x-|'.encode())
@@ -123,9 +124,10 @@ class Servidor():
         # mensagem(recebe os dados do pacote), addr recebe a tupla (ip, porta), onde porta é o numero de porta do transmissor
         # #1024 representa o tamanho do pacote recebido
         mensagem, addr = socket.recvfrom(2048)
+
         socket.settimeout(0.05)
         try:
-            while mensagem:
+            while True:
                 # Separa o número de sequência, o checksum e os dados do pacote
                 num_sequencia, checksumm, dados = mensagem.split(
                     '|-x-|-x-|-x-|'.encode())
