@@ -3,6 +3,8 @@ import json
 # Criando o arquivo JSON vazio
 with open('teste.json', 'w') as f:
     json.dump({}, f)
+    print('json criado')
+    print('-----------------------------------------------------------------------')
 
 # Função para carregar os dados do arquivo JSON
 def load_data():
@@ -13,31 +15,29 @@ def load_data():
 # Função para salvar os dados no arquivo JSON
 def save_data(data):
     with open('teste.json', 'w') as f:
-        json.dump(data, f)
+        json.dump(data, f, indent=4)
 
 # Criando os objetos descritos
 servicos = {
-    1: 'Corte de cabelo',
-    2: 'Pedicure',
-    3: 'Manicure'
+    1: 'cardapio',
+    2: 'Pedido',
+    3: 'conta individual',
+    3: 'conta da mesa'
 }
 
 pedido = {
-    'id': 1,
-    'nome': 'João',
-    'mesa': 5,
-    'conta': {
-        'produto1': 10.5,
-        'produto2': 15.2,
-        'produto3': 7.0
-    },
-    'socket': '192.168.1.1:5000',
-    'pedidos': {
-        'produto1': 2,
-        'produto2': 1,
-        'produto3': 3
+    "id": "Joao",
+    "mesa": 5,
+    "conta individual": [2,1,3],
+    "socket": ("localhost", 3000),
+    "pedidos": {
+        "produto1": 2,
+        "produto2": 1,
+        "produto3": 3
     }
 }
+
+
 
 # Carregando os dados do arquivo JSON
 data = load_data()
@@ -50,7 +50,7 @@ data['pedido'] = pedido
 save_data(data)
 
 # Exibindo o conteúdo do arquivo JSON
-print(data)
+print('esse são os dados do json:', data)
 
 # Alterando uma informação
 data['servicos'][1] = 'Barbearia'
@@ -64,5 +64,6 @@ save_data(data)
 del data['servicos'][3]
 save_data(data)
 
+#del data['servicos'][1]
 # Exibindo o conteúdo atualizado do arquivo JSON
 print(data)
