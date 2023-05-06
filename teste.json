@@ -1,0 +1,1 @@
+{"servicos": {"1": "Barbearia", "2": "Pedicure"}, "pedido": {"id": 1, "nome": "Jo\u00e3o", "mesa": 5, "conta": {"produto1": 10.5, "produto2": 15.2, "produto3": 7.0}, "socket": "192.168.1.1:5000", "pedidos": {"produto1": 2, "produto2": 1, "produto3": 3, "produto4": 8.5}}}

@@ -33,3 +33,15 @@ jogador_1_dict = json.loads(jogador_1) #transformando o objeto json em um dict
 
 #acessando a chave 'estudos' cujo o valor é uma lista
 print(jogador_1_dict["estudos"])
+# acessando a chave 'habilidades' cujo o valor é um dicionario
+print(jogador_1_dict["habilidades"])
+
+#imprimindo as chaves do meu dicionario
+for c in jogador_1_dict:
+    print(c)
+
+print('\n\n')
+
+#imprimindo os itemss (chave-valor) do meu dicitionario
+for i in jogador_1_dict.items():
+    print(i)
