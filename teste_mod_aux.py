@@ -97,7 +97,8 @@ class Servidor():
         elif dados.decode()[0:6] == 'nome: ':
             mensagem_resposta = 'opções: '
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
-    
+        else:
+            socket.sendto('comunicacao encerrada'.encode(), addr_cliente)
 
     def checksum(self, dados):
         groups = [dados[i:i+8] for i in range(0, len(dados), 8)]

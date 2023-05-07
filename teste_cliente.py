@@ -15,12 +15,12 @@ while True:
     if mensagem_cliente == 'quit':
         Cliente().solicitacao_cliente(socket_cliente, Servidor().ip_porta, mensagem_cliente)
         resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
+        print(horas, resposta_restaurante.decode())
         break
 
     # cliente envia mensagem  para o restaurante 
     Cliente().solicitacao_cliente(socket_cliente, Servidor().ip_porta, mensagem_cliente)
         
-
     # resposta do restaurante
     resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
     print(horas, resposta_restaurante.decode())
