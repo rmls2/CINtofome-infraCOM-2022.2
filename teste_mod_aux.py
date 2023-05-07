@@ -64,9 +64,7 @@ class Servidor():
     def __init__(self) -> None:
         self.ip_porta = ('localhost', 5000)
         self.mesas = ['1','2','3','4','5','6','7','8','9','10']
-        self.envio_de_nome = False
-        self.envio_de_mesa = False
-
+        
     def recebe_solicitacao(self, socket):
         mensagem_cliente, addr_cliente = socket.recvfrom(1024)
         num_sequencia, checksumm, dados = mensagem_cliente.split('|-x--x-|'.encode())
@@ -78,13 +76,8 @@ class Servidor():
             print(self.envia_ack(socket,dados.decode(),num_sequencia.decode(),addr_cliente ))
         else:
             print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
-        
-        if dados.decode() in self.mesas:
-            return dados
-        elif dados.decode()[0:5] == 'nome-':
-            return dados
-        else:
-            return dados
+
+        return dados
 
 
     def resposta_restaurante(self, socket, dados, addr_cliente):
@@ -101,8 +94,8 @@ class Servidor():
 
            
         # se o cliente responde com o seu nome, o restaurante pergunta se o mesmo está só ou acompanhado
-        elif dados.decode():
-            mensagem_resposta = 'CIntofome: Você está só ou acompanhado?'
+        elif dados.decode()[0:6] == 'nome: ':
+            mensagem_resposta = 'opções: '
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
     
 

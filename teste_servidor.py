@@ -18,15 +18,13 @@ informacoes_cliente = []
 
 while True:
 
-    
     dados = Servidor().recebe_solicitacao(socket_servidor)
     
-    if not Servidor().envio_de_mesa:
+    if dados.decode()[0:6] == 'nome: ':
+        informacoes_cliente.append(dados.decode()[6:])
+    if dados.decode() in Servidor().mesas:
         informacoes_cliente.append(dados.decode())
-    if not Servidor().envio_de_nome:
-        informacoes_cliente.append(dados.decode())
-        print(informacoes_cliente)
-
+    print(informacoes_cliente)
     try:
         socket_servidor.settimeout(5)
         Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
