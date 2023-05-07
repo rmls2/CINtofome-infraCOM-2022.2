@@ -13,7 +13,7 @@ class Cliente ():
             dados_em_bits = ''.join([format(byte, '08b') for byte in dados])
             if not dados:
                 break
-            # Monta a mensagem com número de sequênciextensao_arquivo = input('digite a extensão do arquivo enviado: ')a, checksum e dados do pacote
+            # Monta a mensagem com número de sequência, dados e checksum
             mensagem = f'{bin(num_sequencia)}|-x-|-x-|-x-|{self.checksum(dados_em_bits)}|-x-|-x-|-x-|'.encode()+dados
            # Defina o número máximo de reenvios
             MAX_RESENDS = 3

@@ -85,6 +85,7 @@ save_data(data)
 data=load_data()
 data['pedido 4'] = dados_do_cliente('robert', 5,("localhost", 3000),*[2,1,3], **{"produto1": 2,"produto2": 1,"produto3": 3})
 save_data(data)
+
 # del data['pedido']['socket']
 # save_data(data) 
 
