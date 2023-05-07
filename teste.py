@@ -93,5 +93,3 @@ print('essa é a função checksum: ', checksum(bits))
     print('Números binários: ', binaries)
     print('Soma dos números binários: ', bin(soma)) """
 
-if 10:
-    pass
