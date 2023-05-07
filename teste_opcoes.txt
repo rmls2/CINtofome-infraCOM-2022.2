@@ -1,3 +1,5 @@
+opções:
+
 1 - cardápio
 2 - pedido
 3 - conta individual

@@ -26,8 +26,11 @@ while True:
         informacoes_cliente.append(dados.decode())
     print(informacoes_cliente)
     try:
-        socket_servidor.settimeout(5)
+        socket_servidor.settimeout(10)
         Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
+        if dados.decode() == 'quit':
+            print('comunicação encerrada')
+            break
        
     except TimeoutError:
         print('comunicação finalizada')

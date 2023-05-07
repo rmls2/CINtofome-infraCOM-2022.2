@@ -95,8 +95,9 @@ class Servidor():
            
         # se o cliente responde com o seu nome, o restaurante pergunta se o mesmo está só ou acompanhado
         elif dados.decode()[0:6] == 'nome: ':
-            mensagem_resposta = 'opções: '
-            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+            with open('teste_opcoes.txt') as f:
+                mensagem_resposta = f.read()
+                socket.sendto(mensagem_resposta.encode(), addr_cliente)
         else:
             socket.sendto('comunicacao encerrada'.encode(), addr_cliente)
 
