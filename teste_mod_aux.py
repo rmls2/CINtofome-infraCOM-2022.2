@@ -134,6 +134,11 @@ class Cliente ():
 class Servidor():
     def __init__(self) -> None:
         self.ip_porta = ('localhost', 5000)
+        self.mesas = ['1','2','3','4','5','6','7','8','9','10']
+        self.acoes = ['chefia','digite seu nome']
+        self.nome_cliente = ''
+        self.mesa_cliente = 0
+        self.addr_cliente = ()
 
     def envia_pacote(self, socket, caminho_do_arquivo, ip_porta):
         arquivo = open(caminho_do_arquivo, 'rb')
@@ -187,21 +192,41 @@ class Servidor():
 
         arquivo_servidor.close()
 
-    def resposta_restaurante(self, socket, mensagem_respota):
-        mensagem, addr = socket.recvfrom(1024)
+
+    def resposta_restaurante(self, socket, mensagem_cliente, addr_cliente):
+        #mensagem, addr = socket.recvfrom(1024)
             # Separa o número de sequência, o checksum e os dados do pacote
-        num_sequencia, checksumm, dados = mensagem.split('|-x--x-|'.encode())
+        num_sequencia, checksumm, dados = mensagem_cliente.split('|-x--x-|'.encode())
         dados_em_bits = ''.join([format(byte, '08b')for byte in dados])
 
         
         if checksumm.decode() == self.checksum(dados_em_bits):
             print(f'pacote {int(num_sequencia[2:], 2)} recebido.')
-            self.envia_ack(socket,dados.decode(),num_sequencia.decode(),addr )
-            print(self.envia_ack(socket,dados.decode(),num_sequencia.decode(),addr ))
+            self.envia_ack(socket,dados.decode(),num_sequencia.decode(), addr_cliente )
+            print(self.envia_ack(socket,dados.decode(),num_sequencia.decode(),addr_cliente ))
         else:
             print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
             return False
-        socket.sendto(mensagem_respota.encode(), addr)
+        # se o cliente fizer o chamadado para o restaurante, o restaurante pede um numero de mesa
+        if dados.decode() == 'chefia':
+            mensagem_resposta = 'CIntofome: digite sua mesa' 
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+
+        # se o cliente responder com o seu numero de mesa, o restaurante salva sua mesa e pergunta seu nome
+        elif dados.decode() in self.mesas:
+            self.mesa_cliente = dados.decode()
+            mensagem_resposta = 'CIntofome: digite seu nome' 
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+           
+        # se o cliente responde com o seu nome, o restaurante pergunta se o mesmo está só ou acompanhado
+        elif dados.decode():
+            self.nome_cliente = dados.decode()
+            mensagem_resposta = 'CIntofome: Você está só ou acompanhado?'
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+        # se o cliente não seguir o procedimento a opção é invalida.
+        else:
+            mensagem_resposta = 'opção invalida'
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
 
     def checksum(self, dados):
         groups = [dados[i:i+8] for i in range(0, len(dados), 8)]

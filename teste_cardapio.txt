@@ -1,0 +1,6 @@
+1 - cardápio
+2 - pedido
+3 - conta individual
+4 - não fecho com robô, chame seu gerente
+5 - nada não, tava só testando
+6 - conta da mesa
