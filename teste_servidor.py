@@ -14,21 +14,29 @@ print('***************************************************************')
 horas = datetime.datetime.now().strftime('%H:%M')
 mensagem_servidor = 'CIntofome: digite sua mesa'
 
+informacoes_cliente = []
 
 while True:
-    mensagem_cliente, addr_cliente = socket_servidor.recvfrom(1024)
+
+    
+    dados = Servidor().recebe_solicitacao(socket_servidor)
+    
+    if not Servidor().envio_de_mesa:
+        informacoes_cliente.append(dados.decode())
+    if not Servidor().envio_de_nome:
+        informacoes_cliente.append(dados.decode())
+        print(informacoes_cliente)
+
     try:
         socket_servidor.settimeout(5)
-        Servidor().resposta_restaurante(socket_servidor,mensagem_cliente, addr_cliente )
-        mensagem_cliente, addr_cliente = socket_servidor.recvfrom(1024)
-        # envia mensagem para o cliente
-        Servidor().resposta_restaurante(socket_servidor,mensagem_cliente, addr_cliente )
+        Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
+       
     except TimeoutError:
         print('comunicação finalizada')
         break
 
-# envia mensagem para o cliente
-""" Servidor().resposta_restaurante(socket_servidor,mensagem_servidor, addr_cliente )
+informacoes_cliente.append(Cliente().ip_porta)
+print(informacoes_cliente)
 
-socket_servidor.close() """
+socket_servidor.close() 
 
