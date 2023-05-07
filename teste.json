@@ -70,5 +70,21 @@
             "produto2": 1,
             "produto3": 3
         }
+    },
+    "pedido 5": {
+        "id": "karol",
+        "mesa": 5,
+        "conta individual": [
+            50.0,
+            10.0
+        ],
+        "socket": [
+            "localhost",
+            3000
+        ],
+        "pedidos": {
+            "bife": 50.0,
+            "suco": 10.0
+        }
     }
 }
