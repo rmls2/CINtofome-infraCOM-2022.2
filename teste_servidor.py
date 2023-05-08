@@ -1,7 +1,8 @@
 import socket
-from teste_mod_aux import Cliente, Servidor, load_data, save_data
+from teste_mod_aux import Cliente, Servidor, load_data, save_data, cardapio, opcoes
 import datetime
 import json
+import time
 # criação do socket do cliente, AF_INET representa o ipv4 e SOCK_DGRAM representa o socket udp
 socket_servidor = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 # o bind vai alocar reserva de buffer para que a porta do cliente possa receber os dados passados a ela
@@ -15,9 +16,12 @@ print('***************************************************************')
 horas = datetime.datetime.now().strftime('%H:%M')
 mensagem_servidor = 'CIntofome: digite sua mesa'
 
-cardapio = Servidor().cardapio()
+cardapio_comida = cardapio()
 informacoes_cliente = []
-opcoes = Servidor().opcoes()
+preço_por_prato = []
+pratos_escolhidos = {}
+
+opcoes = opcoes()
 
 while True:
 
@@ -54,10 +58,30 @@ if dados == '1' or dados == 'cardápio':
         print('json criado')
 
     data = load_data()
-    data['cardapio'] = cardapio
+    data['cardapio'] = cardapio_comida
     save_data(data)
     data_json = json.dumps(data, indent=4)
+    # envia cardápio
     socket_servidor.sendto(data_json.encode(), Cliente().ip_porta)
+
+""" dados = Servidor().recebe_solicitacao(socket_servidor)
+Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta) """
+
+time.sleep(2)
+
+dados = Servidor().recebe_solicitacao(socket_servidor)
+
+# armazena o pedido do cliente na lista informacoes_cliente
+if dados.decode() in cardapio_comida.keys():
+    # add o preço do prato escolhido na lista preço_por_prato
+    preço_por_prato.append(cardapio_comida[dados.decode()])
+    # add a lista com o preço dos pratos escolhido na lista informaçoes_cliente
+    informacoes_cliente.append(preço_por_prato)
+    # add itens ao dicionários pratos_escolhidos de acordo com o prato escolhido 
+    pratos_escolhidos[dados.decode()] = cardapio_comida[dados.decode()]
+    informacoes_cliente.append(pratos_escolhidos)
+    Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
+    print(informacoes_cliente)
 
 socket_servidor.close() 
 

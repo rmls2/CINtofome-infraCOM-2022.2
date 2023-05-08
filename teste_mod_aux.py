@@ -81,7 +81,7 @@ class Servidor():
 
 
     def resposta_restaurante(self, socket, dados, addr_cliente):
-       
+        lista_cardapio = ["lasanha","strogonoff", "risoto", "hamburguer", "pizza", "sopa", "salada"]
         # se o cliente fizer o chamadado para o restaurante, o restaurante pede um numero de mesa
         if dados.decode() == 'chefia':
             mensagem_resposta = 'CIntofome: digite sua mesa' 
@@ -98,6 +98,15 @@ class Servidor():
             with open('teste_opcoes.txt') as f:
                 mensagem_resposta = f.read()
                 socket.sendto(mensagem_resposta.encode(), addr_cliente)
+
+        elif dados.decode() == 'pedir':
+            mensagem_resposta = 'Cintofome: qual prato você gostaria?'
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+        
+        elif dados.decode() in lista_cardapio:
+            mensagem_resposta = 'CIntofome: algo mais?'
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+
         else:
             socket.sendto('comunicacao encerrada'.encode(), addr_cliente)
 
@@ -123,31 +132,33 @@ class Servidor():
         if mensagem:
             return f'- {mensagem} recebido\n'
         
-    def cardapio(self):
-        comidas = {
-        "lasanha": 25.00,
-        "strogonoff": 30.00,
-        "risoto": 20.00,
-        "hamburguer": 18.00,
-        "pizza": 35.00,
-        "sopa": 15.00,
-        "salada": 12.00 }
 
-        """    bebidas = {
-        'água': 3.00,
-        'refrigerante': 5.00,
-        'cerveja': 6.00,
-        'suco': 8.00,
-        'café': 4.00,
-        'chá': 4.00,
-        'vinho': 30.00
-        } """
         
-        return comidas
+def cardapio():
+    comidas = {
+    "lasanha": 25.00,
+    "strogonoff": 30.00,
+    "risoto": 20.00,
+    "hamburguer": 18.00,
+    "pizza": 35.00,
+    "sopa": 15.00,
+    "salada": 12.00 }
+
+    """    bebidas = {
+    'água': 3.00,
+    'refrigerante': 5.00,
+    'cerveja': 6.00,
+    'suco': 8.00,
+    'café': 4.00,
+    'chá': 4.00,
+    'vinho': 30.00
+    } """
     
-    def opcoes(self):
-        opcoes_restaurante = {'1':'cardápio', '2': 'pedido', '3': 'conta individual', '5' :'nada não, tava só testando', '6':'conta da mesa'}
-        return opcoes_restaurante
+    return comidas
+    
+def opcoes():
+    opcoes_restaurante = {'1':'cardápio', '2': 'pedido', '3': 'conta individual', '5' :'nada não, tava só testando', '6':'conta da mesa'}
+    return opcoes_restaurante
     
 import json
 
