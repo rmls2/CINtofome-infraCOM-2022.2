@@ -64,14 +64,13 @@ if dados == '1' or dados == 'cardápio':
     # envia cardápio
     socket_servidor.sendto(data_json.encode(), Cliente().ip_porta)
 
-""" dados = Servidor().recebe_solicitacao(socket_servidor)
-Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta) """
-
 time.sleep(2)
 
+# recebe o pedido do cliente escolhendo alguma opção do cardápio
 dados = Servidor().recebe_solicitacao(socket_servidor)
 
-while dados.decode() != 'não':
+# o loop vai rodar enquanto o cliente estiver escolhendo pratos 
+while True:
     # armazena o pedido do cliente na lista informacoes_cliente
     if dados.decode() in cardapio_comida.keys():
         # add o preço do prato escolhido na lista preço_por_prato
@@ -80,12 +79,19 @@ while dados.decode() != 'não':
         pratos_escolhidos[dados.decode()] = cardapio_comida[dados.decode()]
         Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
         print(informacoes_cliente)
-        dados = Servidor().recebe_solicitacao(socket_servidor)
+    if dados.decode() == 'não':
+        Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
+        break
+    dados = Servidor().recebe_solicitacao(socket_servidor)
 
+#add os preço e os pratos escolhidos pelo cliente na lista que contém as informações dos clientes.
 informacoes_cliente.append(preço_por_prato)
 informacoes_cliente.append(pratos_escolhidos)
 
 print(informacoes_cliente)
+
+
+# parte 3 ter que responder os pedidos do cliente por conta da mesa, conta invidual, lavantar, pagar 
 
 socket_servidor.close() 
 

@@ -109,6 +109,12 @@ class Servidor():
             mensagem_resposta = 'CIntofome: algo mais?'
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
             return mensagem_resposta
+        
+        elif dados.decode() == 'não':
+            mensagem_resposta = 'CIntofome: vamos preparar seu(s) pedido(s)'
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+            return mensagem_resposta
+
         else:
             socket.sendto('comunicacao encerrada'.encode(), addr_cliente)
             return 'comunicacao encerrada'
