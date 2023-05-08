@@ -2,7 +2,7 @@
 
 ![Em desenvolvimento](https://img.shields.io/badge/status-em%20desenvolvimento-blue)
 ![data da ultima atualizaçao](https://img.shields.io/badge/data%20da%20%C3%BAltima%20vers%C3%A3o-abril-green)
-![branches](https://img.shields.io/badge/branches-2-orange)
+![branches](https://img.shields.io/badge/branches-3-orange)
 
 #### _obs: nessa branch está as funcionalidades da parte 2 do projeto, a forma de executá-la é semelhante a primeria parte_
 
