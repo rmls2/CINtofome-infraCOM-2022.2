@@ -116,11 +116,22 @@ save_tabela(tabela)
 dados = Servidor().recebe_solicitacao(socket_servidor)
 Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
 
-if dados.decode() == '3' or dados.decode() == '6':
+# se o cliente peda a conta, o servidor nesse momento vai calculá-la
+
+if dados.decode() == 'quanto custou?':
     conta_a_pagar = tabela['conta de '+ informacoes_cliente[1]]["conta individual"]
-    print(conta_a_pagar)
-    conta_a_pagar_json = json.dumps(conta_a_pagar, indent=4)
-    socket_servidor.sendto(conta_a_pagar.encode(), Cliente().ip_porta)
+    pedidos = tabela['conta de '+ informacoes_cliente[1]]["pedidos"]
+    total_a_pagar = 0
+    for c in conta_a_pagar:
+        total_a_pagar+=c
+    print('o total a pagar é: ', total_a_pagar)
+    total_do_cliente = str(total_a_pagar)
+
+    pedidos_json = json.dumps(pedidos, indent=4)
+    socket_servidor.sendto(pedidos_json.encode(), Cliente().ip_porta)
+    socket_servidor.sendto(f' CIntofome: o total: {total_do_cliente}'.encode(), Cliente().ip_porta)
+
+# receber o pagamento do cliente
 
 socket_servidor.close() 
 

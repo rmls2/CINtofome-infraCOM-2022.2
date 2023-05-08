@@ -1,6 +1,7 @@
 import socket
 from modulo_aux import Cliente, Servidor, cardapio, opcoes
 import datetime
+import time
 # criação do socket do cliente, AF_INET representa o ipv4 e SOCK_DGRAM representa o socket udp
 socket_cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 # o bind vai alocar reserva de buffer para que a porta do cliente possa receber os dados passados a ela
@@ -65,13 +66,19 @@ if mensagem_cliente in cardapio_comidas.keys():
         print(horas, resposta_restaurante.decode())
 
 # parte 3 pedir a conta da mesa, pedir a conta individual, levantar, pagar  
-
-
 mensagem_cliente = input(f'{horas} Cliente: ')
 Cliente().solicitacao_cliente(socket_cliente, Servidor().ip_porta, mensagem_cliente)
 resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
 print(horas, resposta_restaurante.decode())
 
+# valor da conta
+resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
+print(horas, resposta_restaurante.decode())
+
+resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
+print(horas, resposta_restaurante.decode())
+
+# pagar o restaurante
 
 socket_cliente.close()
 
