@@ -23,9 +23,8 @@ def cardapio():
 x = "strogonoff" 
 l = []
 
-if x in cardapio().keys():
-    l.append({x: cardapio()[x]})
-
-    print(l)
+for c in cardapio().items():
+    print(c)
+    print(c[0])
 
 

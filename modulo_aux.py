@@ -64,7 +64,7 @@ class Servidor():
     def __init__(self) -> None:
         self.ip_porta = ('localhost', 5000)
         self.mesas = ['1','2','3','4','5','6','7','8','9','10']
-        
+        self.opcoes = {'2': 'pedido', '3': 'conta individual', '5' :'nada não, tava só testando', '6':'conta da mesa'}
     def recebe_solicitacao(self, socket):
         mensagem_cliente, addr_cliente = socket.recvfrom(1024)
         num_sequencia, checksumm, dados = mensagem_cliente.split('|-x--x-|'.encode())
@@ -93,17 +93,13 @@ class Servidor():
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
             return mensagem_resposta
            
-        # se o cliente responde com o seu nome, o restaurante pergunta se o mesmo está só ou acompanhado
+        # se o cliente responde com o seu nome, o restaurante mostra as opções
         elif dados.decode()[0:6] == 'nome: ':
             with open('teste_opcoes.txt') as f:
                 mensagem_resposta = f.read()
                 socket.sendto(mensagem_resposta.encode(), addr_cliente)
                 return mensagem_resposta
-            
-        elif dados.decode() == 'pedir':
-            mensagem_resposta = 'Cintofome: qual prato você gostaria?'
-            socket.sendto(mensagem_resposta.encode(), addr_cliente)
-            return mensagem_resposta
+
         
         elif dados.decode() in lista_cardapio:
             mensagem_resposta = 'CIntofome: gostaria de algo mais?'
@@ -113,6 +109,10 @@ class Servidor():
         elif dados.decode() == 'não':
             mensagem_resposta = 'CIntofome: vamos preparar seu(s) pedido(s)'
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
+            return mensagem_resposta
+
+        elif dados.decode() in self.opcoes.keys() or dados.decode() in self.opcoes.values():
+            mensagem_resposta = dados.decode()
             return mensagem_resposta
 
         else:
