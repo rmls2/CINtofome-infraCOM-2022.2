@@ -20,6 +20,7 @@ cardapio_comida = cardapio()
 informacoes_cliente = []
 preço_por_prato = []
 pratos_escolhidos = {}
+total_do_cliente = ''
 
 opcoes_ = opcoes()
 
@@ -116,7 +117,7 @@ save_tabela(tabela)
 dados = Servidor().recebe_solicitacao(socket_servidor)
 Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
 
-# se o cliente peda a conta, o servidor nesse momento vai calculá-la
+# se o cliente pede a conta, o servidor nesse momento vai calculá-la
 
 if dados.decode() == 'quanto custou?':
     conta_a_pagar = tabela['conta de '+ informacoes_cliente[1]]["conta individual"]
@@ -129,9 +130,28 @@ if dados.decode() == 'quanto custou?':
 
     pedidos_json = json.dumps(pedidos, indent=4)
     socket_servidor.sendto(pedidos_json.encode(), Cliente().ip_porta)
-    socket_servidor.sendto(f' CIntofome: o total: {total_do_cliente}'.encode(), Cliente().ip_porta)
+    socket_servidor.sendto(f'CIntofome: o total é {total_do_cliente}'.encode(), Cliente().ip_porta)
 
-# receber o pagamento do cliente
+# se o cliente decidir pagar
+dados = Servidor().recebe_solicitacao(socket_servidor)
+Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
+
+# recebendo o pagamento do cliente
+while True:
+    if dados.decode() == 'pagar':
+        pagamento_cliente, addr_cliente = socket_servidor.recvfrom(1024)
+
+        if pagamento_cliente.decode() == total_do_cliente:
+            socket_servidor.sendto('CINtofome: Obrigado!'.encode(), Cliente().ip_porta)
+            break
+        else:
+            socket_servidor.sendto('CINtofome: Digitou o valor errado. Tente novamente'.encode(), Cliente().ip_porta)
+            pagamento_cliente, addr_cliente = socket_servidor.recvfrom(1024)
+
+#apagando o registro do cliente 
+
+del tabela['conta de '+ informacoes_cliente[1]]
+save_tabela(tabela)
 
 socket_servidor.close() 
 

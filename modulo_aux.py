@@ -115,7 +115,12 @@ class Servidor():
             mensagem_resposta = 'CIntofome: calculando sua conta...'
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
             return mensagem_resposta
-
+        
+        elif dados.decode() == 'pagar':
+            mensagem_resposta = 'CIntofome: digite o valor para pagamento'
+            socket.sendto(mensagem_resposta.encode(), addr_cliente)
+            return mensagem_resposta
+         
         else:
             socket.sendto('comunicacao encerrada'.encode(), addr_cliente)
             return 'comunicacao encerrada'

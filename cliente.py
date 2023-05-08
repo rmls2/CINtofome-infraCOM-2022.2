@@ -78,7 +78,24 @@ print(horas, resposta_restaurante.decode())
 resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
 print(horas, resposta_restaurante.decode())
 
-# pagar o restaurante
+# ação de pagar o restaurante
+mensagem_cliente = input(f'{horas} Cliente: ')
+Cliente().solicitacao_cliente(socket_cliente, Servidor().ip_porta, mensagem_cliente)
+resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
+print(horas, resposta_restaurante.decode())
+
+# pagando o restaurante
+mensagem_cliente = input(f'{horas} Cliente: ')
+socket_cliente.sendto(mensagem_cliente.encode(), Servidor().ip_porta)
+
+while True:
+    resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
+    print(horas, resposta_restaurante.decode())
+    if resposta_restaurante.decode() == 'CINtofome: Obrigado!':
+        break
+    else:
+        mensagem_cliente = input(f'{horas} Cliente: ')
+        socket_cliente.sendto(mensagem_cliente.encode(), Servidor().ip_porta)
 
 socket_cliente.close()
 
