@@ -4,7 +4,7 @@
 ![data da ultima atualizaçao](https://img.shields.io/badge/data%20da%20%C3%BAltima%20vers%C3%A3o-abril-green)
 ![branches](https://img.shields.io/badge/branches-2-orange)
 
-#### _obs: nessa branch está as funcionalidades da parte 2 do projeto, a forma de executá-la é semelhante a primeria parte_
+#### _obs: nessa branch está as funcionalidades da parte 3 do projeto, a forma de executá-la é semelhante a primeria parte_
 
 ## Desenvolvedores
 
