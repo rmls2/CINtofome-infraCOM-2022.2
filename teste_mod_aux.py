@@ -86,30 +86,33 @@ class Servidor():
         if dados.decode() == 'chefia':
             mensagem_resposta = 'CIntofome: digite sua mesa' 
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
-
+            return mensagem_resposta
         # se o cliente responder com o seu numero de mesa, o restaurante salva sua mesa e pergunta seu nome
         elif dados.decode() in self.mesas:
             mensagem_resposta = 'CIntofome: digite seu nome' 
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
-
+            return mensagem_resposta
            
         # se o cliente responde com o seu nome, o restaurante pergunta se o mesmo está só ou acompanhado
         elif dados.decode()[0:6] == 'nome: ':
             with open('teste_opcoes.txt') as f:
                 mensagem_resposta = f.read()
                 socket.sendto(mensagem_resposta.encode(), addr_cliente)
-
+                return mensagem_resposta
+            
         elif dados.decode() == 'pedir':
             mensagem_resposta = 'Cintofome: qual prato você gostaria?'
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
+            return mensagem_resposta
         
         elif dados.decode() in lista_cardapio:
             mensagem_resposta = 'CIntofome: algo mais?'
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
-
+            return mensagem_resposta
         else:
             socket.sendto('comunicacao encerrada'.encode(), addr_cliente)
-
+            return 'comunicacao encerrada'
+        
     def checksum(self, dados):
         groups = [dados[i:i+8] for i in range(0, len(dados), 8)]
         binaries = [int(group, 2) for group in groups]

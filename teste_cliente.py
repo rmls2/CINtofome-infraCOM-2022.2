@@ -52,6 +52,14 @@ if mensagem_cliente in cardapio_comidas.keys():
     resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
     print(horas, resposta_restaurante.decode())
 
-    # respondendo aos pedidos
+    # respondendo aos pedidos por algo mais
+    while True:
+        mensagem_cliente = input(f'{horas} Cliente: ')
+        if mensagem_cliente == 'não':
+            Cliente().solicitacao_cliente(socket_cliente, Servidor().ip_porta, mensagem_cliente)
+            break
+        Cliente().solicitacao_cliente(socket_cliente, Servidor().ip_porta, mensagem_cliente)
+        resposta_restaurante, addr_restaurante = socket_cliente.recvfrom(1024)
+        print(horas, resposta_restaurante.decode())
     
 socket_cliente.close()

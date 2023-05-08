@@ -71,17 +71,21 @@ time.sleep(2)
 
 dados = Servidor().recebe_solicitacao(socket_servidor)
 
-# armazena o pedido do cliente na lista informacoes_cliente
-if dados.decode() in cardapio_comida.keys():
-    # add o preço do prato escolhido na lista preço_por_prato
-    preço_por_prato.append(cardapio_comida[dados.decode()])
-    # add a lista com o preço dos pratos escolhido na lista informaçoes_cliente
-    informacoes_cliente.append(preço_por_prato)
-    # add itens ao dicionários pratos_escolhidos de acordo com o prato escolhido 
-    pratos_escolhidos[dados.decode()] = cardapio_comida[dados.decode()]
-    informacoes_cliente.append(pratos_escolhidos)
-    Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
-    print(informacoes_cliente)
+while dados.decode() != 'não':
+    # armazena o pedido do cliente na lista informacoes_cliente
+    if dados.decode() in cardapio_comida.keys():
+        # add o preço do prato escolhido na lista preço_por_prato
+        preço_por_prato.append(cardapio_comida[dados.decode()])
+        # add itens ao dicionários pratos_escolhidos de acordo com o prato escolhido 
+        pratos_escolhidos[dados.decode()] = cardapio_comida[dados.decode()]
+        Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
+        print(informacoes_cliente)
+        dados = Servidor().recebe_solicitacao(socket_servidor)
+
+informacoes_cliente.append(preço_por_prato)
+informacoes_cliente.append(pratos_escolhidos)
+
+print(informacoes_cliente)
 
 socket_servidor.close() 
 
