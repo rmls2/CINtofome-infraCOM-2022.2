@@ -1,0 +1,11 @@
+{
+    "cardapio": {
+        "lasanha": 25.0,
+        "strogonoff": 30.0,
+        "risoto": 20.0,
+        "hamburguer": 18.0,
+        "pizza": 35.0,
+        "sopa": 15.0,
+        "salada": 12.0
+    }
+}

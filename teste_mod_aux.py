@@ -122,3 +122,41 @@ class Servidor():
 
         if mensagem:
             return f'- {mensagem} recebido\n'
+        
+    def cardapio(self):
+        comidas = {
+        "lasanha": 25.00,
+        "strogonoff": 30.00,
+        "risoto": 20.00,
+        "hamburguer": 18.00,
+        "pizza": 35.00,
+        "sopa": 15.00,
+        "salada": 12.00 }
+
+        """    bebidas = {
+        'água': 3.00,
+        'refrigerante': 5.00,
+        'cerveja': 6.00,
+        'suco': 8.00,
+        'café': 4.00,
+        'chá': 4.00,
+        'vinho': 30.00
+        } """
+        
+        return comidas
+    
+    def opcoes(self):
+        opcoes_restaurante = {'1':'cardápio', '2': 'pedido', '3': 'conta individual', '5' :'nada não, tava só testando', '6':'conta da mesa'}
+        return opcoes_restaurante
+    
+import json
+
+def load_data():
+    with open('cardapio.json', 'r') as f:
+        data = json.load(f)
+    return data
+
+# Função para salvar os dados no arquivo JSON
+def save_data(data):
+    with open('cardapio.json', 'w') as f:
+        json.dump(data, f, indent=4)
