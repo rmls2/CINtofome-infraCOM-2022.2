@@ -106,7 +106,7 @@ class Servidor():
             return mensagem_resposta
         
         elif dados.decode() in lista_cardapio:
-            mensagem_resposta = 'CIntofome: algo mais?'
+            mensagem_resposta = 'CIntofome: gostaria de algo mais?'
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
             return mensagem_resposta
         
