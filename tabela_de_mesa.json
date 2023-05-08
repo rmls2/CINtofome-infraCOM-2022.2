@@ -1,20 +1,18 @@
 {
-    "conta de robert": {
-        "id": "robert",
-        "mesa": "4",
+    "conta de rob": {
+        "id": "rob",
+        "mesa": "3",
         "socket": [
             "localhost",
             3001
         ],
         "conta individual": [
             25.0,
-            15.0,
-            12.0
+            20.0
         ],
         "pedidos": {
             "lasanha": 25.0,
-            "sopa": 15.0,
-            "salada": 12.0
+            "risoto": 20.0
         }
     }
 }
