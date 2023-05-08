@@ -12,10 +12,11 @@ print('***************************************************************')
 print('**** CINto fome está aberto esperando receber clientes! :) ****')
 print('***************************************************************')
 print('***************************************************************')
-# mensagem do servidor
+# mensagem padrão do servidor
 horas = datetime.datetime.now().strftime('%H:%M')
 mensagem_servidor = 'CIntofome: digite sua mesa'
 
+# as variáveis abaixo vai guardar as informações do cliente que será usada para criar a tabela de mesa
 cardapio_comida = cardapio()
 informacoes_cliente = []
 preço_por_prato = []
@@ -24,15 +25,15 @@ total_do_cliente = ''
 
 opcoes_ = opcoes()
 
+# esse loop vai rodar até pegar as informações de nome e mesa do cliente
 while True:
-
     dados = Servidor().recebe_solicitacao(socket_servidor)
     
     if dados.decode()[0:6] == 'nome: ':
         informacoes_cliente.append(dados.decode()[6:])
     if dados.decode() in Servidor().mesas:
         informacoes_cliente.append(dados.decode())
-    print(informacoes_cliente)
+    # print(informacoes_cliente)
 
     try:
         socket_servidor.settimeout(10)
@@ -45,7 +46,7 @@ while True:
         break
 
 informacoes_cliente.append(Cliente().ip_porta)
-print('são esses os dados do cliente:' , informacoes_cliente)
+# print('são esses os dados do cliente:' , informacoes_cliente)
 
 
 # parte dois ter que apresentar o menu de opções para o cliente
@@ -56,7 +57,7 @@ dados = dados.decode()
 if dados == '1' or dados == 'cardápio':
     with open('cardapio.json', 'w') as f:
         json.dump({}, f)
-        print('json criado')
+        # print('json criado')
 
     data = load_data()
     data['cardapio'] = cardapio_comida
@@ -79,7 +80,7 @@ while True:
         # add itens ao dicionários pratos_escolhidos de acordo com o prato escolhido 
         pratos_escolhidos[dados.decode()] = cardapio_comida[dados.decode()]
         Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
-        print(informacoes_cliente)
+        # print(informacoes_cliente)
     if dados.decode() == 'não':
         Servidor().resposta_restaurante(socket_servidor, dados, Cliente().ip_porta)
         break
@@ -89,7 +90,7 @@ while True:
 informacoes_cliente.append(preço_por_prato)
 informacoes_cliente.append(pratos_escolhidos)
 
-print(informacoes_cliente)
+# print(informacoes_cliente)
 
 
 # parte 3 ter que responder os pedidos do cliente por conta da mesa, conta invidual, lavantar, pagar 
@@ -97,7 +98,7 @@ print(informacoes_cliente)
 # crianco o arquivo jason da tabela de mesa
 with open('tabela_de_mesa.json', 'w') as f:
     json.dump({}, f)
-    print('tabela em formato json criado')
+    # print('tabela em formato json criado')
 
 # carregando a tabela de mesa
 tabela = load_tabela()
@@ -125,7 +126,7 @@ if dados.decode() == 'quanto custou?':
     total_a_pagar = 0
     for c in conta_a_pagar:
         total_a_pagar+=c
-    print('o total a pagar é: ', total_a_pagar)
+    # print('o total a pagar é: ', total_a_pagar)
     total_do_cliente = str(total_a_pagar)
 
     pedidos_json = json.dumps(pedidos, indent=4)
@@ -149,7 +150,6 @@ while True:
             pagamento_cliente, addr_cliente = socket_servidor.recvfrom(1024)
 
 #apagando o registro do cliente 
-
 del tabela['conta de '+ informacoes_cliente[1]]
 save_tabela(tabela)
 

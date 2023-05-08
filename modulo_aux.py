@@ -71,9 +71,9 @@ class Servidor():
         dados_em_bits = ''.join([format(byte, '08b')for byte in dados])
 
         if checksumm.decode() == self.checksum(dados_em_bits):
-            print(f'pacote {int(num_sequencia[2:], 2)} recebido.')
+            #print(f'pacote {int(num_sequencia[2:], 2)} recebido.')
             self.envia_ack(socket,dados.decode(),num_sequencia.decode(), addr_cliente )
-            print(self.envia_ack(socket,dados.decode(),num_sequencia.decode(),addr_cliente ))
+            self.envia_ack(socket,dados.decode(),num_sequencia.decode(),addr_cliente )
         else:
             print(f'pacote {int(num_sequencia[2:], 2)} corrompido...')
 
@@ -168,6 +168,8 @@ def opcoes():
 def dados_do_cliente(mesa, nome, socket, *conta_individual, **pedidos):
     cliente =  {"id": nome, "mesa": mesa, "socket": socket, "conta individual": conta_individual,"pedidos": pedidos}
     return cliente
+
+# essa parte será usada para manipular arquivos json
 
 import json
 
