@@ -64,7 +64,7 @@ class Servidor():
     def __init__(self) -> None:
         self.ip_porta = ('localhost', 5000)
         self.mesas = ['1','2','3','4','5','6','7','8','9','10']
-        #self.opcoes = {'2': 'pedido', '3': 'conta individual', '5' :'nada não, tava só testando', '6':'conta da mesa'}
+        
     def recebe_solicitacao(self, socket):
         mensagem_cliente, addr_cliente = socket.recvfrom(1024)
         num_sequencia, checksumm, dados = mensagem_cliente.split('|-x--x-|'.encode())
@@ -100,7 +100,6 @@ class Servidor():
                 socket.sendto(mensagem_resposta.encode(), addr_cliente)
                 return mensagem_resposta
 
-        
         elif dados.decode() in lista_cardapio:
             mensagem_resposta = 'CIntofome: gostaria de algo mais?'
             socket.sendto(mensagem_resposta.encode(), addr_cliente)
