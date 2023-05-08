@@ -1,5 +1,5 @@
 import socket
-from teste_mod_aux import Cliente, Servidor, load_data, save_data, cardapio, opcoes
+from teste_mod_aux import Cliente, Servidor, load_data, save_data, cardapio, opcoes, dados_do_cliente, load_tabela, save_tabela
 import datetime
 import json
 import time
@@ -92,6 +92,24 @@ print(informacoes_cliente)
 
 
 # parte 3 ter que responder os pedidos do cliente por conta da mesa, conta invidual, lavantar, pagar 
+
+# crianco o arquivo jason da tabela de mesa
+with open('tabela_de_mesa.json', 'w') as f:
+    json.dump({}, f)
+    print('tabela em formato json criado')
+
+# carregando a tabela de mesa
+tabela = load_tabela()
+
+mesa = informacoes_cliente[0]
+nome = informacoes_cliente[1]
+socket_= informacoes_cliente[2]
+conta_invidual = informacoes_cliente[3]
+pedidos = informacoes_cliente[4]
+
+#passando as informações da tabela de mesa de acordo com as informações do cliente.
+tabela['conta de '+ informacoes_cliente[1]] = dados_do_cliente(mesa, nome, socket_, *conta_invidual, **pedidos)
+save_tabela(tabela)
 
 socket_servidor.close() 
 

@@ -153,22 +153,16 @@ def cardapio():
     "sopa": 15.00,
     "salada": 12.00 }
 
-    """    bebidas = {
-    'água': 3.00,
-    'refrigerante': 5.00,
-    'cerveja': 6.00,
-    'suco': 8.00,
-    'café': 4.00,
-    'chá': 4.00,
-    'vinho': 30.00
-    } """
-    
     return comidas
     
 def opcoes():
     opcoes_restaurante = {'1':'cardápio', '2': 'pedido', '3': 'conta individual', '5' :'nada não, tava só testando', '6':'conta da mesa'}
     return opcoes_restaurante
-    
+
+def dados_do_cliente(mesa, nome, socket, *conta_individual, **pedidos):
+    cliente =  {"id": nome, "mesa": mesa, "socket": socket, "conta individual": conta_individual,"pedidos": pedidos}
+    return cliente
+
 import json
 
 def load_data():
@@ -179,4 +173,13 @@ def load_data():
 # Função para salvar os dados no arquivo JSON
 def save_data(data):
     with open('cardapio.json', 'w') as f:
+        json.dump(data, f, indent=4)
+
+def load_tabela():
+    with open('tabela_de_mesa.json', 'r') as f:
+        data = json.load(f)
+    return data
+
+def save_tabela(data):
+    with open('tabela_de_mesa.json', 'w') as f:
         json.dump(data, f, indent=4)
