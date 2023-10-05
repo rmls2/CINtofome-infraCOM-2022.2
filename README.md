@@ -1,6 +1,6 @@
 # Projeto CINtofome
 
-![concluido](https://img.shields.io/badge/status-em%20desenvolvimento-blue)
+![concluido](https://img.shields.io/badge/status-%20concluido-blue)
 ![data da ultima atualizaçao](https://img.shields.io/badge/data%20da%20%C3%BAltima%20vers%C3%A3o-abril-green)
 ![branches](https://img.shields.io/badge/branches-1-orange)
  
